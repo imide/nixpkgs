@@ -19,14 +19,14 @@
 
 buildPythonPackage rec {
   pname = "pycrdt";
-  version = "0.10.7";
+  version = "0.10.9";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jupyter-server";
     repo = "pycrdt";
-    rev = "refs/tags/${version}";
-    hash = "sha256-Yb8ZFfJ/chF6+DUq7kLAxeRH9tuOCD2KiXxFG7ljQwg=";
+    tag = version;
+    hash = "sha256-G0hmjSm1AP7CbnhT56Pxb/vVOQVGxSS4W4/CMGAeP7c=";
   };
 
   postPatch = ''
