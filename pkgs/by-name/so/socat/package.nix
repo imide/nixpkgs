@@ -25,6 +25,14 @@ stdenv.mkDerivation rec {
       --replace /sbin/ifconfig ifconfig
   '';
 
+  configureFlags =
+    lib.optionals (!stdenv.hostPlatform.isLinux) [
+      "--disable-posixmq"
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isFreeBSD [
+      "--disable-dccp"
+    ];
+
   buildInputs = [
     openssl
     readline

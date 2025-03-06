@@ -2267,6 +2267,8 @@ in
     dependencies = [ self.nvim-dap ];
   };
 
+  nvim-dbee = callPackage ./non-generated/nvim-dbee { };
+
   nvim-coverage = super.nvim-coverage.overrideAttrs {
     dependencies = with self; [
       neotest
@@ -2629,10 +2631,6 @@ in
     ];
   };
 
-  orgmode = super.orgmode.overrideAttrs {
-    dependencies = with self; [ (nvim-treesitter.withPlugins (p: [ p.org ])) ];
-  };
-
   otter-nvim = super.otter-nvim.overrideAttrs {
     dependencies = [ self.nvim-lspconfig ];
   };
@@ -2880,10 +2878,12 @@ in
   snacks-nvim = super.snacks-nvim.overrideAttrs {
     nvimSkipModule = [
       # Requires setup call first
+      # attempt to index global 'Snacks' (a nil value)
       "snacks.dashboard"
       "snacks.debug"
       "snacks.dim"
       "snacks.git"
+      "snacks.image.convert"
       "snacks.image.image"
       "snacks.image.init"
       "snacks.image.placement"
@@ -4031,11 +4031,11 @@ in
       "lzextras"
       "lzn-auto-require"
       "middleclass"
+      "mini-test"
       "neorg"
       "neotest"
       "nui-nvim"
       "nvim-cmp"
-      "nvim-dbee"
       "nvim-nio"
       "nvim-web-devicons"
       "oil-nvim"
