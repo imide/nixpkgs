@@ -3,7 +3,6 @@
   fetchFromGitHub,
   buildGoModule,
   buildNpmPackage,
-  fetchurl,
   makeWrapper,
   nodejs,
   stdenvNoCC,
@@ -11,33 +10,35 @@
   nix-update-script,
 }:
 
-let
-  version = "0.47.0";
+stdenvNoCC.mkDerivation (finalAttrs: {
+  pname = "pocket-id";
+  version = "0.48.0";
+
   src = fetchFromGitHub {
     owner = "pocket-id";
     repo = "pocket-id";
-    tag = "v${version}";
-    hash = "sha256-YFoh30uMQItoeY1j08flPbxUhybeKJTEhd9hsiMaCJQ=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-ax5E3e3GUrQLVsQREUhjmORjXQgKrEBVa9ySJr5ZLUY=";
   };
 
   backend = buildGoModule {
     pname = "pocket-id-backend";
-    inherit version src;
+    inherit (finalAttrs) version src;
 
-    sourceRoot = "${src.name}/backend";
+    sourceRoot = "${finalAttrs.src.name}/backend";
 
-    vendorHash = "sha256-mqpBP+A2X5ome1Ppg/Kki0C+A77jFtWzUjI/RN+ZCzg=";
+    vendorHash = "sha256-0LAlltXd7YNQu7ymdjUSy75hMBz6MpvmUtgct43BU7M=";
 
     preFixup = ''
       mv $out/bin/cmd $out/bin/pocket-id-backend
     '';
   };
 
-  frontend = buildNpmPackage (finalAttrs: {
+  frontend = buildNpmPackage {
     pname = "pocket-id-frontend";
-    inherit version src;
+    inherit (finalAttrs) version src;
 
-    sourceRoot = "${src.name}/frontend";
+    sourceRoot = "${finalAttrs.src.name}/frontend";
 
     npmDepsHash = "sha256-CKxa0uL7pBQJiA2LPDA/HQvRk8sjphZ9nur8jb7BnU8=";
     npmFlags = [ "--legacy-peer-deps" ];
@@ -67,17 +68,7 @@ let
 
       runHook postInstall
     '';
-  });
-
-in
-stdenvNoCC.mkDerivation rec {
-  pname = "pocket-id";
-  inherit
-    version
-    src
-    backend
-    frontend
-    ;
+  };
 
   dontUnpack = true;
 
@@ -85,8 +76,8 @@ stdenvNoCC.mkDerivation rec {
     runHook preInstall
 
     mkdir -p $out/bin
-    ln -s ${backend}/bin/pocket-id-backend $out/bin/pocket-id-backend
-    ln -s ${frontend}/bin/pocket-id-frontend $out/bin/pocket-id-frontend
+    ln -s ${finalAttrs.backend}/bin/pocket-id-backend $out/bin/pocket-id-backend
+    ln -s ${finalAttrs.frontend}/bin/pocket-id-frontend $out/bin/pocket-id-frontend
 
     runHook postInstall
   '';
@@ -108,12 +99,13 @@ stdenvNoCC.mkDerivation rec {
   meta = {
     description = "OIDC provider with passkeys support";
     homepage = "https://pocket-id.org";
-    changelog = "https://github.com/pocket-id/pocket-id/releases/tag/v${version}";
+    changelog = "https://github.com/pocket-id/pocket-id/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.bsd2;
     maintainers = with lib.maintainers; [
       gepbird
+      marcusramberg
       ymstnt
     ];
     platforms = lib.platforms.unix;
   };
-}
+})

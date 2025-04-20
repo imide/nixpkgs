@@ -5274,6 +5274,12 @@
     github = "d4rkstar";
     githubId = 4957015;
   };
+  dabao1955 = {
+    email = "dabao1955@163.com";
+    github = "dabao1955";
+    githubId = 79307765;
+    name = "Hang Li";
+  };
   dadada = {
     name = "dadada";
     email = "dadada@dadada.li";
@@ -10775,6 +10781,12 @@
     github = "jacg";
     githubId = 2570854;
   };
+  JachymPutta = {
+    email = "jachym.putta@gmail.com";
+    github = "JachymPutta";
+    githubId = 67414100;
+    name = "Jachym Putta";
+  };
   jackcres = {
     email = "crespomerchano@gmail.com";
     github = "omarcresp";
@@ -11151,6 +11163,11 @@
     email = "dev@jakubdupak.com";
     github = "jdupak";
     githubId = 22683640;
+  };
+  jeancaspar = {
+    name = "Jean Caspar";
+    github = "JeanCASPAR";
+    githubId = 55629512;
   };
   jecaro = {
     email = "jeancharles.quillet@gmail.com";
@@ -13433,6 +13450,12 @@
     github = "layus";
     githubId = 632767;
     name = "Guillaume Maudoux";
+  };
+  LazilyStableProton = {
+    email = "LazilyStable@proton.me";
+    github = "LazyStability";
+    githubId = 120277625;
+    name = "LazilyStableProton";
   };
   lblasc = {
     email = "lblasc@znode.net";

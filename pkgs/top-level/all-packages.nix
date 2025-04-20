@@ -393,6 +393,8 @@ with pkgs;
     catch2 = catch2_3;
   };
 
+  eff = callPackage ../by-name/ef/eff/package.nix { ocamlPackages = ocaml-ng.ocamlPackages_5_2; };
+
   enochecker-test = with python3Packages; callPackage ../development/tools/enochecker-test { };
 
   inherit (gridlock) nyarr;
@@ -2263,8 +2265,6 @@ with pkgs;
   sway-unwrapped = callPackage ../by-name/sw/sway-unwrapped/package.nix {
     wlroots = wlroots_0_18;
   };
-
-  swaytools = python3Packages.callPackage ../tools/wayland/swaytools { };
 
   cambrinary = python3Packages.callPackage ../applications/misc/cambrinary { };
 
@@ -7285,10 +7285,6 @@ with pkgs;
     jdk = graalvmPackages.graalvm-ce;
   };
 
-  cliscord = callPackage ../misc/cliscord {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
-
   clojupyter = callPackage ../applications/editors/jupyter-kernels/clojupyter {
     jre = jre8;
   };
@@ -7942,9 +7938,9 @@ with pkgs;
       electron-source.electron_35
     else
       electron_35-bin;
-  electron = electron_34;
-  electron-bin = electron_34-bin;
-  electron-chromedriver = electron-chromedriver_34;
+  electron = electron_35;
+  electron-bin = electron_35-bin;
+  electron-chromedriver = electron-chromedriver_35;
 
   autoconf = callPackage ../development/tools/misc/autoconf { };
   autoconf213 = callPackage ../development/tools/misc/autoconf/2.13.nix { };
@@ -8348,9 +8344,11 @@ with pkgs;
   };
 
   framac = callPackage ../by-name/fr/framac/package.nix {
+    ocamlPackages = ocaml-ng.ocamlPackages_5_2;
     why3 = why3.override {
       version = "1.7.2";
       coqPackages = coqPackages_8_18;
+      ocamlPackages = ocaml-ng.ocamlPackages_5_2;
     };
   };
 
@@ -8431,7 +8429,7 @@ with pkgs;
   };
 
   include-what-you-use = callPackage ../development/tools/analysis/include-what-you-use {
-    llvmPackages = llvmPackages_19;
+    llvmPackages = llvmPackages_20;
   };
 
   inherit (callPackage ../applications/misc/inochi2d { })
@@ -8982,10 +8980,6 @@ with pkgs;
   };
 
   aws-spend-summary = haskellPackages.aws-spend-summary.bin;
-
-  backlight-auto = callPackage ../by-name/ba/backlight-auto/package.nix {
-    zig = buildPackages.zig_0_11;
-  };
 
   inherit (callPackages ../development/libraries/bashup-events { }) bashup-events32 bashup-events44;
 
@@ -11472,13 +11466,11 @@ with pkgs;
     (rec {
       zigPackages = recurseIntoAttrs (callPackage ../development/compilers/zig { });
 
-      zig_0_11 = zigPackages."0.11";
       zig_0_12 = zigPackages."0.12";
       zig_0_13 = zigPackages."0.13";
       zig_0_14 = zigPackages."0.14";
     })
     zigPackages
-    zig_0_11
     zig_0_12
     zig_0_13
     zig_0_14
@@ -13290,12 +13282,6 @@ with pkgs;
     ubootWandboard
     ;
 
-  # Upstream Barebox:
-  inherit (callPackage ../misc/barebox { })
-    buildBarebox
-    bareboxTools
-    ;
-
   eudev = callPackage ../by-name/eu/eudev/package.nix {
     util-linux = util-linuxMinimal;
   };
@@ -13565,10 +13551,6 @@ with pkgs;
 
   scheherazade-new = scheherazade.override {
     version = "4.300";
-  };
-
-  starship = callPackage ../tools/misc/starship {
-    inherit (darwin.apple_sdk.frameworks) Security Foundation Cocoa;
   };
 
   inherit (callPackages ../data/fonts/gdouros { })
@@ -14055,8 +14037,7 @@ with pkgs;
     buildServerGui = false;
   };
 
-  drawterm = callPackage ../tools/admin/drawterm { config = "unix"; };
-  drawterm-wayland = callPackage ../tools/admin/drawterm { config = "linux"; };
+  drawterm-wayland = callPackage ../by-name/dr/drawterm/package.nix { withWayland = true; };
 
   droopy = python3Packages.callPackage ../applications/networking/droopy { };
 
@@ -14137,9 +14118,9 @@ with pkgs;
   evilpixie = libsForQt5.callPackage ../applications/graphics/evilpixie { };
 
   greenfoot = callPackage ../applications/editors/greenfoot {
-    openjdk = openjdk17.override {
+    openjdk = openjdk21.override {
       enableJavaFX = true;
-      openjfx_jdk = openjfx17.override { withWebKit = true; };
+      openjfx_jdk = openjfx21.override { withWebKit = true; };
     };
   };
 
@@ -16380,10 +16361,6 @@ with pkgs;
 
   tests-stdenv-gcc-stageCompare = callPackage ../test/stdenv/gcc-stageCompare.nix { };
 
-  t-rec = callPackage ../misc/t-rec {
-    inherit (darwin.apple_sdk.frameworks) Foundation;
-  };
-
   twinkle = qt5.callPackage ../applications/networking/instant-messengers/twinkle { };
 
   terminal-typeracer = callPackage ../applications/misc/terminal-typeracer {
@@ -16563,17 +16540,6 @@ with pkgs;
     stdenv_i686 = pkgsi686Linux.stdenv;
     primusLib_i686 =
       if stdenv.hostPlatform.system == "x86_64-linux" then pkgsi686Linux.primusLib else null;
-  };
-
-  bumblebee = callPackage ../tools/X11/bumblebee {
-    nvidia_x11 = linuxPackages.nvidia_x11;
-    nvidia_x11_i686 =
-      if stdenv.hostPlatform.system == "x86_64-linux" then
-        pkgsi686Linux.linuxPackages.nvidia_x11.override { libsOnly = true; }
-      else
-        null;
-    libglvnd_i686 =
-      if stdenv.hostPlatform.system == "x86_64-linux" then pkgsi686Linux.libglvnd else null;
   };
 
   vlc-bin-universal = vlc-bin.override { variant = "universal"; };
@@ -16817,13 +16783,6 @@ with pkgs;
   };
 
   libxpdf = callPackage ../applications/misc/xpdf/libxpdf.nix { };
-
-  xpra = callPackage ../tools/X11/xpra { };
-  xpraWithNvenc = callPackage ../tools/X11/xpra {
-    withNvenc = true;
-    nvidia_x11 = linuxPackages.nvidia_x11.override { libsOnly = true; };
-  };
-  libfakeXinerama = callPackage ../tools/X11/xpra/libfakeXinerama.nix { };
 
   xmp = callPackage ../applications/audio/xmp {
     inherit (darwin.apple_sdk.frameworks) AudioUnit CoreAudio;
@@ -17140,10 +17099,6 @@ with pkgs;
   beancount-ing-diba = callPackage ../applications/office/beancount/beancount-ing-diba.nix { };
 
   beancount-share = callPackage ../applications/office/beancount/beancount_share.nix { };
-
-  black-hole-solver = callPackage ../games/black-hole-solver {
-    inherit (perlPackages) PathTiny;
-  };
 
   bugdom = callPackage ../games/bugdom {
     stdenv = if stdenv.hostPlatform.isDarwin then overrideSDK stdenv "11.0" else stdenv;
@@ -18403,9 +18358,7 @@ with pkgs;
 
   qucs-s = qt6Packages.callPackage ../applications/science/electronics/qucs-s { };
 
-  xyce = callPackage ../applications/science/electronics/xyce { };
-
-  xyce-parallel = callPackage ../applications/science/electronics/xyce {
+  xyce-parallel = callPackage ../by-name/xy/xyce/package.nix {
     withMPI = true;
     trilinos = trilinos-mpi;
   };

@@ -3488,6 +3488,8 @@ self: super: with self; {
 
   disnake = callPackage ../development/python-modules/disnake { };
 
+  disposable-email-domains = callPackage ../development/python-modules/disposable-email-domains { };
+
   dissect = callPackage ../development/python-modules/dissect { };
 
   dissect-archive = callPackage ../development/python-modules/dissect-archive { };
@@ -3879,6 +3881,8 @@ self: super: with self; {
   django-tagging = callPackage ../development/python-modules/django-tagging { };
 
   django-taggit = callPackage ../development/python-modules/django-taggit { };
+
+  django-tasks = callPackage ../development/python-modules/django-tasks { };
 
   django-tastypie = callPackage ../development/python-modules/django-tastypie { };
 
@@ -16787,6 +16791,8 @@ self: super: with self; {
   sybil = callPackage ../development/python-modules/sybil { };
 
   symbolic = callPackage ../development/python-modules/symbolic { };
+
+  symbolic_10 = callPackage ../development/python-modules/symbolic/10.nix { };
 
   symengine = callPackage ../development/python-modules/symengine { inherit (pkgs) symengine; };
 
