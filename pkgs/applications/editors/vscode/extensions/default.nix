@@ -2609,8 +2609,8 @@ let
         mktplcRef = {
           name = "language-julia";
           publisher = "julialang";
-          version = "1.158.2";
-          hash = "sha256-H3T/SiBqkjhItFDfGlVM+UINimrWlLryampggFPhvzM=";
+          version = "1.167.2";
+          hash = "sha256-0BrJjnKli7GE/CLGUSXJySFJjjpd1S/GMLa6PmddO1Q=";
         };
         meta = {
           changelog = "https://marketplace.visualstudio.com/items/julialang.language-julia/changelog";
@@ -4496,8 +4496,8 @@ let
         mktplcRef = {
           name = "svelte-vscode";
           publisher = "svelte";
-          version = "109.12.0";
-          hash = "sha256-pPzpP7xYZ2cxj1euA3jj6d0g0c+tK+1is+o4zeMdT/Q=";
+          version = "109.12.1";
+          hash = "sha256-0KotF1HGrM9BkImYAfSHGvAeUCZMRnveIBldjhxUUuY=";
         };
         meta = {
           changelog = "https://github.com/sveltejs/language-tools/releases";
